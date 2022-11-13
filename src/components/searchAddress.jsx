@@ -16,7 +16,7 @@ const handleSelect = async value => {
   const results = await geocodeByAddress(value);
   const loc = await getLatLng(results[0]);
   setAdress(value);
-  props.onSelect(loc);
+  props.onSelect(loc, value);
 }
 
   return (
@@ -30,7 +30,7 @@ const handleSelect = async value => {
               <div className='autocomplete'>
                 <input
                   {...getInputProps({
-                    placeholder: 'Friends Location',
+                    placeholder: 'Search Friend\'s Location',
                     className: 'location-search-input',
                   })}
                 />

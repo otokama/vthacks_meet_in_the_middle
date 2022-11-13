@@ -1,0 +1,28 @@
+.friend-list-container {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid;
+    border-color: rgba(81, 81, 81, 0.2);
+    border-radius: 0.5em;
+    padding: 0.6em 0.3em 0.6em 0.3em;
+    max-height: 20em;
+    overflow-y: scroll;
+}
+
+.friend-record {
+    display: flex;
+    flex-direction: row;
+    border-radius: 0.5em;
+    padding: 0.8em;
+    margin: 0.4em 0.7em 0.4em 0.7em;
+    box-shadow: rgba(0, 0, 0, 0.1) 0.1em 0.1em 0.4em;
+    transition: 0.2s;
+    text-overflow: ellipsis;
+    align-items: center;
+    height: 100%;
+}
+
+.friend-record:hover {
+    box-shadow: rgba(76, 187, 240, 0.6) 0.1em 0.1em 0.4em;
+    transition: 0.3s;
+}
