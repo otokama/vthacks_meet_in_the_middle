@@ -12,5 +12,21 @@
     margin-left: auto;
     margin-right: auto;
     width: 10em;
-    bottom: 2em;
+    bottom: 6em;
+    font-weight: 900 !important;
 }
+
+.hangout-btn {
+    position: absolute;
+    z-index: 2;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 10em;
+    bottom: 2em;
+    background-color: #5F01FF !important;
+    border-color: transparent !important;
+    font-weight: 1000 !important;
+}
+

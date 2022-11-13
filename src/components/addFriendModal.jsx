@@ -85,7 +85,7 @@ class AddFriendModal extends Component {
 
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='success' onClick={this.handleAddFriendsToMap}>Add</Button>
+          <Button variant='success' onClick={this.handleAddFriendsToMap}>Add Friends</Button>
           <Button onClick={this.handlerOnClose} variant='secondary'>Close</Button>
         </Modal.Footer>
       </Modal>

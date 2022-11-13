@@ -2,7 +2,7 @@ import Navbar from './navbar';
 import Map from './map';
 function App() {
   return (<>
-    <Navbar/>
+    {/* <Navbar/> */}
     <Map/>
   </>);
 }
