@@ -4,10 +4,10 @@ import '../css/friendlist.css';
 import { Container } from 'react-bootstrap';
 
 const FriendsList = props => {
-    const { friends } = props;
+    const { friends, onDelete } = props;
     return (<>
         <Container className='friend-list-container'>
-            {friends.map((friend, i) => (<FriendRecord friend={friend} key={i}></FriendRecord>))}
+            {friends.map((friend, i) => (<FriendRecord friend={friend} key={i} onDelete={(friend) => onDelete(friend)}></FriendRecord>))}
         </Container>
     </>);
 }

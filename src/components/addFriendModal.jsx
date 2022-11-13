@@ -15,7 +15,8 @@ class AddFriendModal extends Component {
     this.state = {
       friends: [],
       newName: '',
-      newAddress: null
+      newAddress: null,
+      hasDuplicate: false,
     };
     
   }
@@ -23,14 +24,20 @@ class AddFriendModal extends Component {
   handleSelectAddress = (coor, addr) => {
     this.setState({
       newAddress: {
-        lng: coor.lng,
-        lat: coor.lat,
+        coordinate: [coor.lat, coor.lng],
         address: addr
       }
     });
   }
 
   handleInputName = (name) => {
+    this.setState({hasDuplicate: false});
+    this.state.friends.forEach((friend) => {
+      if (friend.name === name) {
+        this.setState({hasDuplicate: true});
+        return;
+      }
+    });
     this.setState({newName: name});
   }
 
@@ -40,26 +47,46 @@ class AddFriendModal extends Component {
       name: this.state.newName,
       location: this.state.newAddress
     }
-    this.setState({friends: [...this.state.friends, newFriend]});
+    this.setState({
+      friends: [...this.state.friends, newFriend],
+      hasDuplicate: true
+    });
   }
 
+  handleAddFriendsToMap = () => {
+    this.props.onSubmit(this.state.friends);
+  }
+
+  handleDelete = (friend) => {
+    this.setState({
+      friends: this.state.friends.filter((f) => f.name !== friend.name),
+      hasDuplicate: false
+    });
+    this.props.onDelete(friend);
+  };
+
+  handlerOnClose = () => {
+    this.setState({newName: '', newAddress: null});
+    this.props.onHide();
+  }
+  
   render() {
-    const { onHide } = this.props;
+    const {show, onHide} = this.props;
     return (
-      <Modal centered {...this.props} size='lg'>
+      <Modal centered show={show} onHide={onHide} size='lg'>
         <Modal.Body>
-          <h4 className='header'>My Friends</h4>
-          {this.state.friends.length > 0 && <FriendsList friends={this.state.friends}/>}
+          <h4 className='header'>Friends</h4>
           <Container className='input-container'>
-            <input placeholder='Name' className='input-name' onChange={(e) => this.handleInputName(e.target.value)}></input>
+            <input id='name-input' placeholder='Name' className='input-name' onChange={(e) => this.handleInputName(e.target.value)}></input>
             <SearchAddress onSelect={this.handleSelectAddress}></SearchAddress>
-            <Button className='add-new-friend-btn' disabled={!this.state.newAddress || !this.state.newName} onClick={this.handleAddSingleFriend}>Add</Button>
+            <Button className='add-new-friend-btn' disabled={!this.state.newAddress || !this.state.newName || this.state.hasDuplicate} onClick={this.handleAddSingleFriend}>Add</Button>
           </Container>
+          {this.state.friends.length > 0 && <FriendsList friends={this.state.friends} onDelete={this.handleDelete}/>}
 
         </Modal.Body>
         <Modal.Footer>
-          <Button variant='success'>Add Friends</Button>
-          <Button onClick={onHide} variant='secondary'>Close</Button>
+          <Button variant='success' onClick={this.handleAddFriendsToMap}>Add</Button>
+          <Button onClick={this.handlerOnClose} variant='secondary'>Close</Button>
         </Modal.Footer>
       </Modal>
     );

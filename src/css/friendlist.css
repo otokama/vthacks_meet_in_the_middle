@@ -26,3 +26,17 @@
     box-shadow: rgba(76, 187, 240, 0.6) 0.1em 0.1em 0.4em;
     transition: 0.3s;
 }
+
+.remove-friend-btn{
+    margin: 0 0.1em 0 auto;
+    background-color: transparent !important;
+    border-color: transparent !important;
+    font-size: 1.3em !important;
+    color: #808080 !important;
+    transition: 0.2s;
+}
+
+.remove-friend-btn:hover {
+    color: red !important;
+    transition: 0.2s;
+}

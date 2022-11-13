@@ -10,7 +10,7 @@ import PlacesAutocomplete, {
 
 function SearchAddress(props) {
 
-const[address,setAdress] = useState("");
+const [address,setAdress] = useState("");
 
 const handleSelect = async value => {
   const results = await geocodeByAddress(value);
@@ -20,7 +20,7 @@ const handleSelect = async value => {
 }
 
   return (
-    <div>
+
           <PlacesAutocomplete
             value={address}
             onChange={setAdress}
@@ -31,7 +31,7 @@ const handleSelect = async value => {
                 <input
                   {...getInputProps({
                     placeholder: 'Search Friend\'s Location',
-                    className: 'location-search-input',
+                    className: 'location-search-input'
                   })}
                 />
                 {suggestions.length > 0 && 
@@ -50,7 +50,6 @@ const handleSelect = async value => {
               </div>
             )}
           </PlacesAutocomplete>
-    </div>
   );
 }
 
