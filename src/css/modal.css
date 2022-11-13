@@ -1,0 +1,71 @@
+.header{
+    text-align: center;
+    font-family: 'Nunito Sans', sans-serif;
+}
+
+.location-search-input {
+    width: 20em;
+    height: 2.5em;
+    padding: 0.5em;
+    border-radius: 0.5em;
+    margin: 0.5em;
+}
+
+.autocomplete-dropdown-container {
+    position: absolute;
+    height: 10em;
+}
+
+.autocomplete-dropdown{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    background-color: white;
+    padding: 0.5em;
+    width: 20em;
+    height: 14em;
+    border-radius: 0.5em;
+}
+
+.suggestion-item{
+    width: 19em;
+    margin: 0.1em;
+    padding: 0.4em 1em 0.4em 1em;
+    cursor: pointer;
+    transition: 0.1s;
+    border-radius: 0.2em;
+}
+
+.suggestion-item:hover {
+    transition: 0.1s;
+    background-color: rgb(193, 193, 193);
+}
+
+
+.input-container {
+    display: flex;
+    flex-direction: row;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    border: 2px solid;
+    border-color: rgba(81, 81, 81, 0.2);
+    border-radius: 0.5em;
+    padding: 0.8em 0.5em 0.8em 0.5em;
+}
+
+.input-name {
+    width: 10em;
+    padding: 0.5em;
+    height: 2.5em;
+    border-radius: 0.5em;
+    margin: 0.5em;
+}
+
+.add-new-friend-btn {
+    margin: 0.5em;
+    width: 3.5em;
+    height: 2.5em;
+}

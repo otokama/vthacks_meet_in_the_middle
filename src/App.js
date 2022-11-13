@@ -1,10 +1,10 @@
-import logo from './logo.svg';
-import './App.css';
-
+import Navbar from './navbar';
+import Map from './map';
 function App() {
-  return (
-    <></>
-  );
+  return (<>
+    <Navbar/>
+    <Map/>
+  </>);
 }
 
 export default App;

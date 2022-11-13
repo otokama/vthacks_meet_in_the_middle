@@ -1,0 +1,17 @@
+.navbar {
+    background-color: rgb(0, 0, 0, 0.1);
+    width: 100%;
+    z-index: 10;
+}
+
+.navbar-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.setting-btn {
+    margin: 0.5em 0.5em 0 auto;
+    background-color: transparent !important;
+    border-color: transparent !important;
+    font-size: 2em;
+}
