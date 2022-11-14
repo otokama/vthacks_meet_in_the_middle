@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
-import { MapContainer, TileLayer, Marker } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 import { Button } from 'react-bootstrap';
 import AddFriendModal from './components/addFriendModal';
 import SearchResults from './components/searchResult';
 import NotifToast from './components/toasts';
-import {createPersonMarker, createLocationMarker, getCenter} from './utils/marker';
+import {createPersonMarker, createLocationMarker, getCenter, getFriendsMarkerBound} from './utils/marker';
 import './css/map.css';
 
+function ChangeView(props) {
+  const map = useMap();
+  const { friends } = props;
+  if (friends.length > 1) {
+    map.fitBounds(getFriendsMarkerBound(friends));
+  }
+  return null;
+}
 
 class Map extends Component {
   
@@ -71,9 +79,10 @@ class Map extends Component {
                     address: result.vicinity
                 })
             });
+
             this.setState({searchResults: formatted});
         } else if (status === window.google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-          this.setState({showToast: true, toastMsg: 'Hmm, no good places found... Try move closer'});
+          this.setState({showToast: true, toastMsg: 'Hmm, no good places found... Try move closer', SearchResults: []});
           setTimeout(() => {this.setState({showToast: false})}, 2000);
         }
     });
@@ -92,6 +101,7 @@ class Map extends Component {
   }
 
   renderSearchResultMarker() {
+    
     return (
       this.state.searchResults.map((place, i) => 
         <Marker key={i} icon={createLocationMarker(place.icon)} position={place.coordinate}></Marker>
@@ -121,6 +131,7 @@ class Map extends Component {
             &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://api.maptiler.com/maps/basic-v2/256/{z}/{x}/{y}@2x.png?key=8R29rXR7q29M4WdrS40C"
           />
+          <ChangeView friends={this.state.friends}/>
           { this.state.friends.length > 0 && this.renderMarker()}
           { this.state.searchResults.length > 0 && this.renderSearchResultMarker() }
         </MapContainer>

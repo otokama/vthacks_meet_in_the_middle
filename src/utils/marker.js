@@ -37,3 +37,11 @@ export function getCenter(friends) {
     const center = markerLayer.getBounds().getCenter();
     return [center.lat, center.lng];
 }
+
+export function getFriendsMarkerBound(friends) {
+    let markerLayer = new L.FeatureGroup();
+    friends.forEach((f) => {
+        markerLayer.addLayer(L.marker(f.location.coordinate))
+    });
+    return markerLayer.getBounds();
+}
