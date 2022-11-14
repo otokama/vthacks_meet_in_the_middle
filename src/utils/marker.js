@@ -1,6 +1,7 @@
 import L from 'leaflet';
 import person from './person-solid.svg';
-import loc from './location-dot-solid.svg';
+// import loc from './location-dot-solid.svg';
+import '../css/map.css';
 
 export function createPersonMarker() {
     return new L.icon({
@@ -11,20 +12,20 @@ export function createPersonMarker() {
         shadowUrl: null,
         shadowSize: null,
         shadowAnchor: null,
-        iconSize: new L.Point(30, 45)
+        iconSize: new L.Point(30, 30)
     })
 }
 
-export function createLocationMarker() {
+export function createLocationMarker(iconURL) {
     return new L.icon({
-        iconUrl: loc,
-        iconRetinaUrl: loc,
+        iconUrl: iconURL,
+        iconRetinaUrl: iconURL,
         iconAnchor: null,
         popupAnchor: null,
         shadowUrl: null,
         shadowSize: null,
         shadowAnchor: null,
-        iconSize: new L.Point(30, 45)
+        iconSize: new L.Point(25, 25)
     })
 }
 

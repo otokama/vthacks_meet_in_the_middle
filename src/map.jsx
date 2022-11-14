@@ -41,7 +41,6 @@ class Map extends Component {
   }
 
   hangout = () => {
-    // this.setState({searchResults: []});
     const centerCoor = getCenter(this.state.friends);
     var poi = new window.google.maps.LatLng(centerCoor[0], centerCoor[1]);
 
@@ -50,7 +49,7 @@ class Map extends Component {
     });
     var request = {
         location: poi,
-        radius: '3218', 
+        radius: 3218, 
         openNow: true,
         type: ['art_gallery', 'bakery', 'bar', 'beauty_salon', 'bowling_alley', 'cafe', 'campground',
             'casino', 'clothing_store', 'gym', 'lodging', 'movie_rental', 'movie_theater', 'museum', 'night_club',
@@ -93,10 +92,9 @@ class Map extends Component {
   }
 
   renderSearchResultMarker() {
-    
     return (
       this.state.searchResults.map((place, i) => 
-        <Marker key={i} icon={createLocationMarker()} position={place.coordinate}></Marker>
+        <Marker key={i} icon={createLocationMarker(place.icon)} position={place.coordinate}></Marker>
       )
     );
   }

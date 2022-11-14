@@ -38,7 +38,7 @@ const handleSelect = async value => {
                   <Container className='autocomplete-dropdown-container'>
                   <div className="autocomplete-dropdown">
                     {loading && <div>Loading...</div>}
-                    {suggestions.map((suggestion, i) => {
+                    {suggestions.length > 0 && suggestions.map((suggestion, i) => {
                       return (
                         <div key={i} {...getSuggestionItemProps(suggestion)} className='suggestion-item'>
                           <span>{suggestion.description}</span>

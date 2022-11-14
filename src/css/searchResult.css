@@ -17,13 +17,20 @@
 }
 
 .place {
-    height: 100px;
     display: flex;
     flex-direction: row;
     margin: 0.5em;
     align-items: center;
+    justify-content: center;
     border: solid rgba(0,0,0,0.1) 2px;
     border-radius: 0.5em;
+    transition: 0.2s;
+    padding: 0.4em;
+}
+
+.place:hover {
+    border: solid rgba(89, 0, 255, 0.8) 2px;
+    transition: 0.2s;
 }
 
 .place-icon {
@@ -34,12 +41,18 @@
 .place-name {
     font-size: 1em;
     margin-left: 0.5em;
+    text-overflow: wrap;
+}
+
+.place-address-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    margin-left: 1em;
 }
 
 .place-address {
-    align-self: flex-end;
-    text-align: center;
-    margin: 0.5em 0.5em 0.5em auto;
+    margin-top: 1em;
     text-overflow: ellipsis;
-
 }
