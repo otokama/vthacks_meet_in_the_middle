@@ -1,27 +1,45 @@
 .search-result-panel{
     position: absolute;
     z-index: 10;
-    left: 2.5em;
-    top: 2.5em;
+    left: 0;
+    top: 0;
     bottom: 0;
     height: 80%;
-    width: 30%;
-    min-width: 300px;
-    max-height: 100%;
     overflow-y: scroll;
-    background-color: #E5E5E5;
-    border-radius: 1em;
+    background-color: #FBFBFB;
     padding: 0.5em;
     display: flex;
     flex-direction: column;
+    padding: 0.5em;
+    height: 100%;
+    width: 30vw;
+    box-shadow: rgba(0, 0, 0, 0.2) 0.1em 0.1em 0.3em;
 }
 
 .place {
-    z-index: inherit;
+    height: 100px;
     display: flex;
     flex-direction: row;
-    margin: 0.4em;
-    padding: 0.3em;
+    margin: 0.5em;
     align-items: center;
+    border: solid rgba(0,0,0,0.1) 2px;
+    border-radius: 0.5em;
+}
+
+.place-icon {
+    width: 1em;
+    height: 1em;
+}
+
+.place-name {
+    font-size: 1em;
+    margin-left: 0.5em;
+}
+
+.place-address {
+    align-self: flex-end;
+    text-align: center;
+    margin: 0.5em 0.5em 0.5em auto;
+    text-overflow: ellipsis;
 
 }

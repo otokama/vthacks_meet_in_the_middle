@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 import { Button } from 'react-bootstrap';
-import './css/map.css';
 import AddFriendModal from './components/addFriendModal';
-import {createPersonMarker, createLocationMarker, getCenter} from './utils/marker';
 import SearchResults from './components/searchResult';
+import NotifToast from './components/toasts';
+import {createPersonMarker, createLocationMarker, getCenter} from './utils/marker';
+import './css/map.css';
+
 
 class Map extends Component {
   
@@ -14,7 +16,9 @@ class Map extends Component {
       showAddFriend: false,
       markers: [],
       friends: [],
-      searchResults: []
+      searchResults: [], 
+      showToast: false,
+      toastMsg: ''
     };
   }
 
@@ -37,6 +41,7 @@ class Map extends Component {
   }
 
   hangout = () => {
+    // this.setState({searchResults: []});
     const centerCoor = getCenter(this.state.friends);
     var poi = new window.google.maps.LatLng(centerCoor[0], centerCoor[1]);
 
@@ -68,8 +73,15 @@ class Map extends Component {
                 })
             });
             this.setState({searchResults: formatted});
+        } else if (status === window.google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
+          this.setState({showToast: true, toastMsg: 'Hmm, no good places found... Try move closer'});
+          setTimeout(() => {this.setState({showToast: false})}, 2000);
         }
     });
+  }
+
+  setShowToast = canShow => {
+    this.setState({showToast: canShow});
   }
 
   renderMarker() {
@@ -106,8 +118,10 @@ class Map extends Component {
           zoomControl={false}
           >
           <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+            attribution='
+            &copy; <a href="https://www.maptiler.com/copyright">MapTiler</a>
+            &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            url="https://api.maptiler.com/maps/basic-v2/256/{z}/{x}/{y}@2x.png?key=8R29rXR7q29M4WdrS40C"
           />
           { this.state.friends.length > 0 && this.renderMarker()}
           { this.state.searchResults.length > 0 && this.renderSearchResultMarker() }
@@ -115,6 +129,7 @@ class Map extends Component {
         { this.state.searchResults.length > 0 && 
           <SearchResults searchResults={this.state.searchResults}></SearchResults>
         }
+        <NotifToast msg={this.state.toastMsg} canShow={this.state.showToast} setShow={this.setShowToast}/>
       </>
     );
   }

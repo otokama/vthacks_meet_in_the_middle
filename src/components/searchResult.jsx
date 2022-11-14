@@ -3,13 +3,13 @@ import '../css/searchResult.css';
 
 function Result(props) {
     const { place } = props;
-    return (
+    return (<>
         <div className='place'>
-            <strong>{place.name}</strong>
-            <img src={place.icon} alt='place icon'></img>
-            <p>{place.address}</p>
+            <strong className='place-name'>{place.name}</strong>
+            {/* <img src={place.icon} alt='place icon' className='place-icon'></img> */}
+            <p className='place-address'>{place.address}</p>
         </div>
-    );
+    </>);
 }
 
 export default function SearchResults(props) {
