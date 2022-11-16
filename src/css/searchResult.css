@@ -26,6 +26,7 @@
     border-radius: 0.5em;
     transition: 0.2s;
     padding: 0.4em;
+    cursor: pointer;
 }
 
 .place:hover {

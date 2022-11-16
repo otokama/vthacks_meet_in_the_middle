@@ -1,17 +1,26 @@
 import React, { Component } from 'react';
-import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, useMap, Tooltip } from 'react-leaflet';
 import { Button } from 'react-bootstrap';
 import AddFriendModal from './components/addFriendModal';
 import SearchResults from './components/searchResult';
 import NotifToast from './components/toasts';
-import {createPersonMarker, createLocationMarker, getCenter, getFriendsMarkerBound} from './utils/marker';
+import {createPersonMarker, createLocationMarker, getCenter, getFriendsMarkerBound} from './utils/map_utils.js';
 import './css/map.css';
 
-function ChangeView(props) {
+function FocusFriends(props) {
   const map = useMap();
-  const { friends } = props;
-  if (friends.length > 1) {
+  const { friends, needFocus } = props;
+  if (friends.length > 1 && needFocus) {
     map.fitBounds(getFriendsMarkerBound(friends));
+  }
+  return null;
+}
+
+function FocusPlace(props) {
+  const map = useMap();
+  const { place } = props;
+  if (place) {
+    map.flyTo(place.coordinate, map.getZoom());
   }
   return null;
 }
@@ -22,12 +31,16 @@ class Map extends Component {
     super(props);
     this.state = {
       showAddFriend: false,
-      markers: [],
       friends: [],
-      searchResults: [], 
+      needFocusFriend: true,
+      searchResults: [],
+      showMoreResults: false,
       showToast: false,
-      toastMsg: ''
+      toastMsg: '',
+      focusPlace: null
     };
+    this.map = null;
+
   }
 
   toggleShowAdd = (showAddFriend) => {
@@ -37,8 +50,8 @@ class Map extends Component {
   handleAddFriend = friends => {
     this.setState({
       showAddFriend: false,
-      friends,
-      markers: friends.map((f) => [...this.state.markers, f.location.coordinate])
+      needFocusFriend: true,
+      friends
     });
   }
   
@@ -48,26 +61,43 @@ class Map extends Component {
     })
   }
 
+  handleClickPlace = focusPlace => {
+    this.setState({focusPlace, needFocusFriend: false});
+  }
+
+  getMorePlace = () => {
+    // this.setState({showMoreResults: true});
+  }
+
   hangout = () => {
+    this.getPlaces(true);
+  }
+
+  getPlaces = () => {
     const centerCoor = getCenter(this.state.friends);
     var poi = new window.google.maps.LatLng(centerCoor[0], centerCoor[1]);
 
-    var map = new window.google.maps.Map(document.getElementById('map'), {
+    this.map = new window.google.maps.Map(document.getElementById('map'), {
         center: poi
     });
     var request = {
         location: poi,
         radius: 3218, 
         openNow: true,
-        type: ['art_gallery', 'bakery', 'bar', 'beauty_salon', 'bowling_alley', 'cafe', 'campground',
-            'casino', 'clothing_store', 'gym', 'lodging', 'movie_rental', 'movie_theater', 'museum', 'night_club',
-            'park', 'restaurant', 'shopping_mall', 'spa', 'stadium', 'store', 'supermarket', 'tourist_attraction', 'zoo']
+        type: ['bar'] 
+        // TODO: place category
+        // ['art_gallery', 'bakery', 'bar', 'beauty_salon', 'bowling_alley', 'cafe', 'campground',
+        //     'casino', 'clothing_store', 'gym', 'lodging', 'movie_rental', 'movie_theater', 'museum', 'night_club',
+        //     'park', 'restaurant', 'shopping_mall', 'spa', 'stadium', 'store', 'supermarket', 'tourist_attraction', 'zoo']
 
     };
-    var service = new window.google.maps.places.PlacesService(map);
+    var service = new window.google.maps.places.PlacesService(this.map);
     let formatted = [];
-    service.nearbySearch(request, (results, status) => {
+    // let showMore = this.state
+    service.nearbySearch(request, (results, status, pagination) => {
+
         if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+            // console.log(results);
             results.forEach(result => {
                 formatted.push({
                     place_id: result.place_id,
@@ -79,10 +109,18 @@ class Map extends Component {
                     address: result.vicinity
                 })
             });
-
+            
             this.setState({searchResults: formatted});
+            // if (this.state.showMoreResults && pagination && pagination.hasNextPage) {
+            //   pagination.nextPage();
+            // }
+
         } else if (status === window.google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-          this.setState({showToast: true, toastMsg: 'Hmm, no good places found... Try move closer', SearchResults: []});
+          this.setState({
+            showToast: true, 
+            toastMsg: 'Hmm, no good places found... Try move closer', 
+            searchResults: []
+          });
           setTimeout(() => {this.setState({showToast: false})}, 2000);
         }
     });
@@ -104,7 +142,9 @@ class Map extends Component {
     
     return (
       this.state.searchResults.map((place, i) => 
-        <Marker key={i} icon={createLocationMarker(place.icon)} position={place.coordinate}></Marker>
+        <Marker key={i} icon={createLocationMarker(place.icon)} position={place.coordinate}>
+          <Tooltip>{place.name}</Tooltip>
+        </Marker>
       )
     );
   }
@@ -129,14 +169,15 @@ class Map extends Component {
             attribution='
             &copy; <a href="https://www.maptiler.com/copyright">MapTiler</a>
             &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://api.maptiler.com/maps/basic-v2/256/{z}/{x}/{y}@2x.png?key=8R29rXR7q29M4WdrS40C"
+            url="https://api.maptiler.com/maps/streets-v2/256/{z}/{x}/{y}@2x.png?key=8R29rXR7q29M4WdrS40C"
           />
-          <ChangeView friends={this.state.friends}/>
+          <FocusFriends friends={this.state.friends} needFocus={this.state.needFocusFriend}/>
+          <FocusPlace place={this.state.focusPlace}></FocusPlace>
           { this.state.friends.length > 0 && this.renderMarker()}
           { this.state.searchResults.length > 0 && this.renderSearchResultMarker() }
         </MapContainer>
         { this.state.searchResults.length > 0 && 
-          <SearchResults searchResults={this.state.searchResults}></SearchResults>
+          <SearchResults searchResults={this.state.searchResults} onClickPlace={this.handleClickPlace} toBottom={this.getMorePlace}></SearchResults>
         }
         <NotifToast msg={this.state.toastMsg} canShow={this.state.showToast} setShow={this.setShowToast}/>
       </>
