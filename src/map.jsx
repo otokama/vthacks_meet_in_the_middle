@@ -75,7 +75,7 @@ class Map extends Component {
 
   getPlaces = () => {
     const centerCoor = getCenter(this.state.friends);
-    var poi = new window.google.maps.LatLng(centerCoor[0], centerCoor[1]);
+    const poi = new window.google.maps.LatLng(centerCoor[0], centerCoor[1]);
 
     this.map = new window.google.maps.Map(document.getElementById('map'), {
         center: poi
@@ -169,7 +169,7 @@ class Map extends Component {
             attribution='
             &copy; <a href="https://www.maptiler.com/copyright">MapTiler</a>
             &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            url="https://api.maptiler.com/maps/streets-v2/256/{z}/{x}/{y}@2x.png?key=8R29rXR7q29M4WdrS40C"
+            url="https://api.maptiler.com/maps/streets-v2/256/{z}/{x}/{y}@2x.png?key=R7mataYrYFdE89tv6NPx"
           />
           <FocusFriends friends={this.state.friends} needFocus={this.state.needFocusFriend}/>
           <FocusPlace place={this.state.focusPlace}></FocusPlace>
