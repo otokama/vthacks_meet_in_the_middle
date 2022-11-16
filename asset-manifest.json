@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/vthacks_meet_in_the_middle/static/css/main.c266be64.css",
-    "main.js": "/vthacks_meet_in_the_middle/static/js/main.1e330aec.js",
+    "main.css": "/vthacks_meet_in_the_middle/static/css/main.d81111ec.css",
+    "main.js": "/vthacks_meet_in_the_middle/static/js/main.63a1fed0.js",
     "static/js/787.9862cb19.chunk.js": "/vthacks_meet_in_the_middle/static/js/787.9862cb19.chunk.js",
     "static/media/bootstrap-icons.woff?": "/vthacks_meet_in_the_middle/static/media/bootstrap-icons.4133309eaf232a933735.woff",
     "static/media/bootstrap-icons.woff2?": "/vthacks_meet_in_the_middle/static/media/bootstrap-icons.cfde41d697b6dcd56fa6.woff2",
     "index.html": "/vthacks_meet_in_the_middle/index.html",
     "static/media/person-solid.svg": "/vthacks_meet_in_the_middle/static/media/person-solid.f384c3621917d8858d958a7dc9a83b9d.svg",
-    "main.c266be64.css.map": "/vthacks_meet_in_the_middle/static/css/main.c266be64.css.map",
-    "main.1e330aec.js.map": "/vthacks_meet_in_the_middle/static/js/main.1e330aec.js.map",
+    "main.d81111ec.css.map": "/vthacks_meet_in_the_middle/static/css/main.d81111ec.css.map",
+    "main.63a1fed0.js.map": "/vthacks_meet_in_the_middle/static/js/main.63a1fed0.js.map",
     "787.9862cb19.chunk.js.map": "/vthacks_meet_in_the_middle/static/js/787.9862cb19.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.c266be64.css",
-    "static/js/main.1e330aec.js"
+    "static/css/main.d81111ec.css",
+    "static/js/main.63a1fed0.js"
   ]
 }
